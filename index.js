@@ -3,13 +3,22 @@ const app = express();
 const path = require('path');
 const morgan = require('morgan');
 const db = require('./app/config/db');
-const ejsLayouts = require('express-ejs-layouts'); // Import express-ejs-layouts
+const ejsLayouts = require('express-ejs-layouts'); 
+const session = require('express-session');
+const setUserMiddleware = require('./app/middlewares/setUser');
 
+app.use(session({
+    secret: 'jhgaehfzjQKZKNSLBRYIAZ74GBQN',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false }  
+}));
 app.use(morgan('dev'));
-app.use(express.urlencoded({ extended: false }));
+app.use(setUserMiddleware);
+
+app.use(express.urlencoded({extended:false}));
 app.use(express.json());
 app.use(ejsLayouts);
-
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'app/views'));
 
