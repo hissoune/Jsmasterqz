@@ -4,7 +4,6 @@ const Classe = require('../models/Classemodel');
 
 const getclasses = async (req, res) => { 
     const formateurId =req.session.user.id;
-   console.log(formateurId);
    
     try {
         if (formateurId) {
